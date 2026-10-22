@@ -10,11 +10,18 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int selectedIndex = 0;
 
-  final List<Widget> pages = [Text("Home"), Text("Favorites"), Text("Cart")];
+  final List<String> views = ["Home", "Favorites", "Cart"];
+
+  final Map<String, List<Icon>> icons = {
+  "Home": [Icon(Icons.home), Icon(Icons.home_outlined)],
+  "Favorites": [Icon(Icons.favorite), Icon(Icons.favorite_outline)],
+  "Cart": [Icon(Icons.shopping_cart), Icon(Icons.shopping_cart_outlined)],
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: pages[selectedIndex]),
+      body: SafeArea(child: Text(views[selectedIndex])),
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex,
         onDestinationSelected: (value) {
@@ -23,21 +30,12 @@ class _MainPageState extends State<MainPage> {
           });
         },
         destinations: [
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: "Home",
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.favorite),
-            icon: Icon(Icons.favorite_outline),
-            label: "Favorites",
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.shopping_cart),
-            icon: Icon(Icons.shopping_cart_outlined),
-            label: "Cart",
-          ),
+          for (var view in views) 
+            NavigationDestination(
+              selectedIcon: icons[view]![0],
+              icon: icons[view]![1],
+              label: view,
+            )
         ],
       ),
     );
