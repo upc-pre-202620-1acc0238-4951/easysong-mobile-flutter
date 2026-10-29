@@ -1,5 +1,5 @@
 import 'package:easy_song/core/theme.dart';
-import 'package:easy_song/features/home/infrastructure/di/dependency_injection.dart';
+import 'package:easy_song/core/di/dependency_injection.dart';
 import 'package:easy_song/features/onboarding/presentation/onboarding_page.dart';
 import 'package:flutter/material.dart';
 
