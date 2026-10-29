@@ -20,7 +20,13 @@ class HomePage extends StatelessWidget {
           itemCount: viewModel.state.songs.length,
           itemBuilder: (context, index) {
             final Song song = viewModel.state.songs[index];
-            return SongCard(song: song);
+            return SongCard(
+              song: song,
+              isFavorite: viewModel.isFavorite(song.id),
+              onToggleFavorite: () {
+                viewModel.toggleFavorite(song.id);
+              },
+            );
           },
         );
       },
