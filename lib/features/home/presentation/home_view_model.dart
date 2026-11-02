@@ -21,6 +21,10 @@ class HomeViewModel extends ChangeNotifier {
   HomeUiState _state = HomeUiState();
   HomeUiState get state => _state;
 
+  List<Song> get favoriteSongs => _state.songs
+            .where((song) => _state.favoriteSongIds.contains(song.id))
+            .toList();
+
   Future<void> loadSongs() async {
     _state = _state.copyWith(isLoading: false);
     notifyListeners();

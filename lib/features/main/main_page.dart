@@ -1,4 +1,5 @@
 import 'package:easy_song/core/di/dependency_injection.dart';
+import 'package:easy_song/features/favorites/presentation/favorites_page.dart';
 import 'package:easy_song/features/home/presentation/home_page.dart';
 import 'package:easy_song/features/home/presentation/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class _MainPageState extends State<MainPage> {
 
   late final List<Widget> pages = [
     HomePage(viewModel: getIt<HomeViewModel>()),
-    Text("Favorites"),
+    FavoritesPage(viewModel: getIt<HomeViewModel>()),
     Text("Profile"),
   ];
 
