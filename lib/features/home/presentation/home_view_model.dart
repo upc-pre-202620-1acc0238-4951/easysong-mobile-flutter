@@ -26,7 +26,7 @@ class HomeViewModel extends ChangeNotifier {
             .toList();
 
   Future<void> loadSongs() async {
-    _state = _state.copyWith(isLoading: false);
+    _state = _state.copyWith(isLoading: true);
     notifyListeners();
 
     try {
