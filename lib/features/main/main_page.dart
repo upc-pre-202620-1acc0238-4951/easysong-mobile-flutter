@@ -2,6 +2,8 @@ import 'package:easy_song/core/di/dependency_injection.dart';
 import 'package:easy_song/features/favorites/presentation/favorites_page.dart';
 import 'package:easy_song/features/home/presentation/home_page.dart';
 import 'package:easy_song/features/home/presentation/home_view_model.dart';
+import 'package:easy_song/features/playlist/presentation/playlist_page.dart';
+import 'package:easy_song/features/playlist/presentation/playlist_view_model.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -17,7 +19,7 @@ class _MainPageState extends State<MainPage> {
   late final List<Widget> pages = [
     HomePage(viewModel: getIt<HomeViewModel>()),
     FavoritesPage(viewModel: getIt<HomeViewModel>()),
-    Text("Profile"),
+    PlaylistPage(viewModel: getIt<PlaylistViewModel>()),
   ];
 
   @override
@@ -43,9 +45,9 @@ class _MainPageState extends State<MainPage> {
             label: "Favorites",
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.person),
-            icon: Icon(Icons.person_outline),
-            label: "Profile",
+            selectedIcon: Icon(Icons.music_note),
+            icon: Icon(Icons.music_note_outlined),
+            label: "Playlist",
           ),
         ],
       ),

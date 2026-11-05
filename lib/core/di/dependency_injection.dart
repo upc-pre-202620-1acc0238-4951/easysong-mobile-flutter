@@ -16,6 +16,11 @@ import 'package:easy_song/features/home/domain/song_repository.dart';
 import 'package:easy_song/features/home/infrastructure/remote/song_api.dart';
 import 'package:easy_song/features/home/infrastructure/song_repository_impl.dart';
 import 'package:easy_song/features/home/presentation/home_view_model.dart';
+import 'package:easy_song/features/playlist/application/get_playlist_songs_use_case.dart';
+import 'package:easy_song/features/playlist/domain/playlist_repository.dart';
+import 'package:easy_song/features/playlist/infrastructure/playlist_api.dart';
+import 'package:easy_song/features/playlist/infrastructure/playlist_repository_impl.dart';
+import 'package:easy_song/features/playlist/presentation/playlist_view_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sqflite/sqflite.dart';
@@ -84,5 +89,22 @@ void setupDependencies() {
 
   getIt.registerLazySingleton<TokenStorage>(
     () => SecureTokenStorage(storage: getIt<FlutterSecureStorage>()),
+  );
+
+  getIt.registerLazySingleton<PlaylistApi>(
+    () => PlaylistApi(storage: getIt<TokenStorage>()),
+  );
+
+  getIt.registerLazySingleton<PlaylistRepository>(
+    () => PlaylistRepositoryImpl(api: getIt<PlaylistApi>()),
+  );
+
+  getIt.registerLazySingleton<GetPlaylistSongsUseCase>(
+    () => GetPlaylistSongsUseCase(repository: getIt<PlaylistRepository>()),
+  );
+
+  getIt.registerLazySingleton<PlaylistViewModel>(
+    () =>
+        (PlaylistViewModel(getPlaylistSongs: getIt<GetPlaylistSongsUseCase>())),
   );
 }
