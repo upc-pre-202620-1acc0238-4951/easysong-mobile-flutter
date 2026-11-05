@@ -67,10 +67,13 @@ class LoginPage extends StatelessWidget {
               ],
             ),
             if (state is LoginLoading)
-              const Center(child: CircularProgressIndicator()),
+                Container(
+                color: Theme.of(context).colorScheme.onSurface.withAlpha(40),
+                child: const Center(child: CircularProgressIndicator()),
+              ),
           ],
         ),
-      ),
+      ),  
     );
   }
 }

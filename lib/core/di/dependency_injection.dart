@@ -1,4 +1,6 @@
 import 'package:easy_song/core/app_database.dart';
+import 'package:easy_song/core/storage/secure_token_storage.dart';
+import 'package:easy_song/core/storage/token_storage.dart';
 import 'package:easy_song/features/auth/application/login_use_case.dart';
 import 'package:easy_song/features/auth/domain/auth_repository.dart';
 import 'package:easy_song/features/auth/infrastructure/auth_api.dart';
@@ -14,6 +16,7 @@ import 'package:easy_song/features/home/domain/song_repository.dart';
 import 'package:easy_song/features/home/infrastructure/remote/song_api.dart';
 import 'package:easy_song/features/home/infrastructure/song_repository_impl.dart';
 import 'package:easy_song/features/home/presentation/home_view_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -61,7 +64,10 @@ void setupDependencies() {
   getIt.registerLazySingleton<AuthApi>(() => AuthApi());
 
   getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(api: getIt<AuthApi>()),
+    () => AuthRepositoryImpl(
+      api: getIt<AuthApi>(),
+      storage: getIt<TokenStorage>(),
+    ),
   );
 
   getIt.registerLazySingleton<LoginUseCase>(
@@ -70,5 +76,13 @@ void setupDependencies() {
 
   getIt.registerFactory<LoginViewModel>(
     () => LoginViewModel(login: getIt<LoginUseCase>()),
+  );
+
+  getIt.registerLazySingleton<FlutterSecureStorage>(
+    () => FlutterSecureStorage(),
+  );
+
+  getIt.registerLazySingleton<TokenStorage>(
+    () => SecureTokenStorage(storage: getIt<FlutterSecureStorage>()),
   );
 }
